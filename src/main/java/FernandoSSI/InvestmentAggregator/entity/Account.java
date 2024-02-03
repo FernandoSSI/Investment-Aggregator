@@ -2,6 +2,7 @@ package FernandoSSI.InvestmentAggregator.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,7 +17,10 @@ public class Account {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(mappedBy = "account_id")
+    @OneToMany(mappedBy = "account")
+    private List<AccountStock> accountStocks;
+
+    @OneToOne(mappedBy = "account")
     @PrimaryKeyJoinColumn
     private BillingAddress billingAddress;
 
