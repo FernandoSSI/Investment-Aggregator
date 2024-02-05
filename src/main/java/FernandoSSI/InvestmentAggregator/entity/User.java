@@ -1,5 +1,7 @@
 package FernandoSSI.InvestmentAggregator.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -32,8 +34,9 @@ public class User {
     @UpdateTimestamp
     private Instant updateTimestamp;
 
+    @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
-    private List<Account> accounts = new ArrayList<>();
+    private List<Account> accounts;
 
     public User() {
     }

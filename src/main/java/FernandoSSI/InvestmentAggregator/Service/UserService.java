@@ -112,7 +112,9 @@ public class UserService {
         var user = userRepository.findById(UUID.fromString(userId)).
                 orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return user.getAccounts().stream().map(ac ->
+        return user.getAccounts()
+                .stream()
+                .map(ac ->
                 new AccountResponseDto(
                         ac.getAccountId().toString(),
                         ac.getDescription()))

@@ -27,7 +27,7 @@ public class Account {
     private String description;
 
     @OneToMany(mappedBy = "account")
-    private List<AccountStock> accountStocks = new ArrayList<>();
+    private List<AccountStock> accountStocks;
 
     public Account() {
     }
