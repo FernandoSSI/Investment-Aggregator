@@ -1,8 +1,7 @@
 package FernandoSSI.InvestmentAggregator.controller;
 
 import FernandoSSI.InvestmentAggregator.Service.UserService;
-import FernandoSSI.InvestmentAggregator.entity.Dto.UpdateUserDto;
-import FernandoSSI.InvestmentAggregator.entity.Dto.UserDto;
+import FernandoSSI.InvestmentAggregator.entity.Dto.*;
 import FernandoSSI.InvestmentAggregator.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +51,19 @@ public class UserController {
     public ResponseEntity<Void> updateUser(@PathVariable String userId, @RequestBody UpdateUserDto updateUser){
         service.UpdateUser(userId, updateUser);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{userId}/accounts")
+    public ResponseEntity<List<Void>> CreateAccount(@PathVariable String userId,
+                                                                       @RequestBody CreateAccountDto createAccountDto){
+        service.createAccount(userId, createAccountDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{userId}/accounts")
+    public ResponseEntity<List<AccountResponseDto>> listAccounts(@PathVariable String userId){
+        var accounts = service.listAccounts(userId);
+
+        return ResponseEntity.ok(accounts);
     }
 }

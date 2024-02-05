@@ -2,6 +2,7 @@ package FernandoSSI.InvestmentAggregator.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,30 +11,33 @@ import java.util.UUID;
 public class Account {
 
     @Id
-    @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "account_id")
     private UUID accountId;
-
-    @Column(name = "description")
-    private String description;
-
-    @OneToMany(mappedBy = "account")
-    private List<AccountStock> accountStocks;
-
-    @OneToOne(mappedBy = "account")
-    @PrimaryKeyJoinColumn
-    private BillingAddress billingAddress;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
+    @PrimaryKeyJoinColumn
+    private BillingAddress billingAddress;
+
+    @Column(name = "description")
+    private String description;
+
+    @OneToMany(mappedBy = "account")
+    private List<AccountStock> accountStocks = new ArrayList<>();
+
     public Account() {
     }
 
-    public Account(UUID accountId, String description) {
+    public Account(UUID accountId, String description, List<AccountStock> accountStocks, BillingAddress billingAddress, User user) {
         this.accountId = accountId;
         this.description = description;
+        this.accountStocks = accountStocks;
+        this.billingAddress = billingAddress;
+        this.user = user;
     }
 
     public UUID getAccountId() {
@@ -58,5 +62,21 @@ public class Account {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<AccountStock> getAccountStocks() {
+        return accountStocks;
+    }
+
+    public void setAccountStocks(List<AccountStock> accountStocks) {
+        this.accountStocks = accountStocks;
+    }
+
+    public BillingAddress getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(BillingAddress billingAddress) {
+        this.billingAddress = billingAddress;
     }
 }
